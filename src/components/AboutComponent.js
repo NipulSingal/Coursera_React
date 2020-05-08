@@ -1,29 +1,33 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
-function RenderLeaderItem({leader}) {
+
+
+const RenderLeader=(props)=>
+{
     return(
-      <Media>
-      <Media object src={leader.image} alt={leader.name} className="d-flex mr-3 mt-1" />
-      <Media body>
-          <Media heading>
-              <h2 className="mt-1">{leader.name}</h2>
-          </Media>
-          <p className="d-none d-sm-block">{leader.designation}</p>
-          <p className="d-none d-sm-block">{leader.description}</p>
-      </Media>
-      </Media>
+    <Media tag="li">
+        <Media left middle>
+        <Media object src={props.leader.image} alt={props.leader.name} />
+        </Media>
+
+        <Media body className="ml-5">
+            <Media heading>{props.leader.name}</Media>
+            <p>{props.leader.designation}</p>
+            <p>{props.leader.description}</p>
+        </Media>
+    </Media>
     );
-  }
+}
+
 function About(props) {
-    const RenderLeader = props.leaders.map(leader => {
+
+    const leaders = props.leaders.map((leader) => {
         return (
-          <div key={leader.id} className="col-12">
-            <RenderLeaderItem leader={leader}/>
-          </div>
+           <React.Fragment> <RenderLeader leader={leader}/><br /></React.Fragment>
         );
-      });
-  
+    });
+
     return(
         <div className="container">
             <div className="row">
@@ -79,11 +83,15 @@ function About(props) {
                     <h2>Corporate Leadership</h2>
                 </div>
                 <div className="col-12">
-                    {RenderLeader}
+                    <Media list>
+                        {leaders}
+                    </Media>
                 </div>
             </div>
         </div>
     );
 }
 
-export default About;    
+
+
+export default About;
